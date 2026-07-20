@@ -1,24 +1,446 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="robots" content="noindex, nofollow">
-<title>Hi | Jonua</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+<title>Jonua — Erlebnisse statt Dinge</title>
+<meta name="description" content="Jonuas kleine Ecke im Netz: Gedanken und Ideen für alle, die Jonua oder uns eine Freude machen möchten. Lieber gemeinsame Zeit als noch mehr Dinge.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF6EE;
+    --paper-2:#F4ECDE;
+    --ink:#2E2A26;
+    --ink-2:#6E665B;
+    --blue:#3E72A8;
+    --blue-700:#2F5C8C;
+    --blue-100:#E6EEF6;
+    --coral:#E1834F;
+    --coral-100:#F9E7D8;
+    --sage:#79997A;
+    --sage-100:#E8F0E4;
+    --line:#EBE2D2;
+    --shadow:0 1px 2px rgba(46,42,38,.04), 0 14px 30px -18px rgba(46,42,38,.22);
+    --shadow-lift:0 2px 4px rgba(46,42,38,.05), 0 22px 40px -20px rgba(46,42,38,.30);
+    --r:20px;
+    --maxw:1060px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Nunito Sans",system-ui,sans-serif;
+    font-size:clamp(16px,1.05vw,17.5px);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(20px,5vw,40px)}
+
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:500;line-height:1.08;letter-spacing:-.01em;color:var(--ink);margin:0}
+  p{margin:0}
+  a{color:var(--blue-700);text-underline-offset:3px;text-decoration-thickness:1.5px}
+  a:hover{color:var(--blue)}
+  :focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+
+  /* icons rendered via <use> — set inherited paint here (not inherited from sprite ancestor) */
+  .btn svg,.eyebrow svg,.value svg,.callout__ic svg,.chip__ic svg,.gift__ic svg,.reason__ic svg,.footer__meta svg{
+    fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round
+  }
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(251,246,238,.82);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+  .nav.scrolled{border-color:var(--line);box-shadow:0 6px 20px -20px rgba(46,42,38,.5)}
+  .nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:15px}
+  .brand{display:inline-flex;align-items:center;gap:10px;font-family:"Fraunces",serif;font-weight:600;font-size:1.28rem;color:var(--ink);text-decoration:none;letter-spacing:-.02em}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 4px var(--coral-100)}
+  .nav__links{display:flex;align-items:center;gap:8px}
+  .nav__links a{font-family:"Nunito Sans",sans-serif;font-weight:700;font-size:.94rem;color:var(--ink-2);text-decoration:none;padding:8px 12px;border-radius:999px;transition:color .2s,background .2s}
+  .nav__links a:hover{color:var(--ink);background:var(--paper-2)}
+  .nav__links a.btn-mini{color:#fff;background:var(--blue);padding-inline:16px}
+  .nav__links a.btn-mini:hover{background:var(--blue-700);color:#fff}
+  @media(max-width:560px){.nav__links a.hideSm{display:none}}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:"Nunito Sans",sans-serif;font-weight:700;font-size:1rem;text-decoration:none;padding:14px 24px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;transition:transform .18s ease,background .2s,box-shadow .2s,border-color .2s}
+  .btn svg{width:19px;height:19px}
+  .btn--primary{background:var(--blue);color:#fff;box-shadow:0 12px 24px -14px rgba(62,114,168,.9)}
+  .btn--primary:hover{background:var(--blue-700);color:#fff;transform:translateY(-2px)}
+  .btn--ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn--ghost:hover{border-color:var(--blue);color:var(--blue-700);transform:translateY(-2px);background:#fff}
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:clamp(36px,7vw,76px);padding-bottom:clamp(30px,6vw,60px);position:relative}
+  .hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,60px);align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:"Nunito Sans",sans-serif;font-weight:800;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--coral)}
+  .eyebrow svg{width:16px;height:16px}
+  .hero h1{font-size:clamp(2.5rem,6vw,4rem);margin-top:18px}
+  .hero h1 em{font-style:italic;font-weight:400;color:var(--blue)}
+  .hero__lead{margin-top:22px;font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--ink-2);max-width:46ch}
+  .hero__cta{margin-top:30px;display:flex;flex-wrap:wrap;gap:14px}
+  .values{margin-top:38px;display:flex;flex-wrap:wrap;gap:10px}
+  .value{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:.9rem;color:var(--ink);background:#fff;border:1px solid var(--line);padding:9px 16px;border-radius:999px}
+  .value svg{width:17px;height:17px}
+  .hero__art{position:relative}
+  .hero__art svg{width:100%;height:auto;display:block;filter:drop-shadow(0 30px 44px rgba(46,42,38,.14))}
+
+  /* ---------- sections ---------- */
+  .section{padding-block:clamp(56px,9vw,104px);position:relative}
+  .section--tint{background:linear-gradient(180deg,transparent,rgba(232,240,228,.35) 12%,rgba(232,240,228,.35) 88%,transparent)}
+  .section--tint-blue{background:linear-gradient(180deg,transparent,rgba(230,238,246,.5) 12%,rgba(230,238,246,.5) 88%,transparent)}
+  .sec-head{max-width:52ch}
+  .sec-head .eyebrow.sage{color:var(--sage)}
+  .sec-head .eyebrow.coralc{color:var(--coral)}
+  .sec-head h2{font-size:clamp(2rem,4.4vw,3.05rem);margin-top:16px}
+  .sec-head p.lead{margin-top:20px;font-size:clamp(1.05rem,1.5vw,1.18rem);color:var(--ink-2)}
+
+  .squiggle{display:block;width:118px;height:11px;margin-top:8px;overflow:visible}
+  .squiggle path{fill:none;stroke-width:3.2;stroke-linecap:round}
+
+  .subhead{margin-top:clamp(40px,6vw,64px)}
+  .subhead h3{font-size:clamp(1.4rem,2.6vw,1.85rem);font-weight:600}
+  .subhead p{margin-top:12px;color:var(--ink-2);max-width:60ch}
+
+  /* callout */
+  .callout{display:flex;gap:18px;align-items:flex-start;margin-top:34px;background:var(--blue-100);border:1px solid #d3e2ef;border-radius:var(--r);padding:24px 26px}
+  .callout__ic{flex:none;width:46px;height:46px;border-radius:14px;background:#fff;display:grid;place-items:center;color:var(--blue);box-shadow:var(--shadow)}
+  .callout__ic svg{width:24px;height:24px}
+  .callout h4{margin:0 0 4px;font-family:"Fraunces",serif;font-weight:600;font-size:1.18rem}
+  .callout p{color:#3f5f7d}
+
+  /* chip cards (experiences) */
+  .chips{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:14px}
+  .chip{display:flex;gap:15px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s}
+  .chip:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+  .chip__ic{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--tint,var(--sage-100));color:var(--c,var(--sage))}
+  .chip__ic svg{width:23px;height:23px}
+  .chip__t{font-size:.97rem;line-height:1.45;font-weight:600;color:var(--ink)}
+
+  /* gift definition list (material) */
+  .gifts{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 34px}
+  .gift{display:flex;gap:14px;align-items:flex-start;padding:14px 6px;border-bottom:1px solid var(--line)}
+  .gift__ic{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--coral-100);color:var(--coral);margin-top:1px}
+  .gift__ic svg{width:19px;height:19px}
+  .gift b{font-weight:800;color:var(--ink)}
+  .gift span{color:var(--ink-2)}
+  .note{margin-top:22px;font-size:.95rem;color:var(--ink-2);font-style:italic;display:flex;gap:10px;align-items:center}
+  .note svg{width:18px;height:18px;color:var(--coral);flex:none}
+
+  /* reasons */
+  .reasons{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .reason{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow)}
+  .reason__ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:var(--coral-100);color:var(--coral);margin-bottom:16px}
+  .reason__ic svg{width:24px;height:24px}
+  .reason h4{margin:0 0 8px;font-family:"Fraunces",serif;font-weight:600;font-size:1.18rem}
+  .reason p{color:var(--ink-2);font-size:.97rem}
+
+  /* hallo */
+  .hallo{margin-top:10px}
+  .hallo__card{position:relative;overflow:hidden;background:linear-gradient(135deg,#42780f00,transparent),var(--blue);color:#fff;border-radius:28px;padding:clamp(38px,6vw,64px);text-align:center;box-shadow:0 30px 60px -30px rgba(62,114,168,.85)}
+  .hallo__card::before,.hallo__card::after{content:"";position:absolute;border-radius:50%;opacity:.16;pointer-events:none}
+  .hallo__card::before{width:340px;height:340px;background:var(--coral);top:-140px;right:-90px}
+  .hallo__card::after{width:280px;height:280px;background:var(--sage);bottom:-150px;left:-80px}
+  .hallo__card .eyebrow{color:#bcd4ea;position:relative}
+  .hallo__card h2{color:#fff;font-size:clamp(2rem,4.4vw,3rem);margin-top:14px;position:relative}
+  .hallo__card p{position:relative;margin:18px auto 0;max-width:46ch;color:#e4eef7;font-size:1.1rem}
+  .hallo__card .btn{margin-top:30px;position:relative;background:#fff;color:var(--blue-700)}
+  .hallo__card .btn:hover{background:var(--paper);color:var(--blue-700);transform:translateY(-2px)}
+
+  /* footer */
+  .footer{border-top:1px solid var(--line);margin-top:clamp(60px,9vw,100px);padding-block:44px}
+  .footer__in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+  .footer .brand{font-size:1.15rem}
+  .footer__meta{color:var(--ink-2);font-size:.9rem;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .footer__meta a{color:var(--ink-2);text-decoration:none;font-weight:700}
+  .footer__meta a:hover{color:var(--blue-700)}
+
+  /* responsive */
+  @media(max-width:860px){
+    .hero__grid{grid-template-columns:1fr}
+    .hero__art{order:-1;max-width:400px;margin-inline:auto}
+    .reasons{grid-template-columns:1fr}
+    .gifts{grid-template-columns:1fr}
+  }
+  @media(max-width:560px){
+    .callout{flex-direction:column;gap:14px}
+    .hero__cta .btn{flex:1 1 auto;justify-content:center}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important}
+  }
+</style>
 </head>
 <body>
-<h1><a href="index.html">Jonua</a></h1>
-<hr>
-<h2>Hi</h2>
-<p>
-Das ist Jonuas Website.
-<p>
-<h3>Inhalt</h3>
-<p>
-<h3><a href="geschenke.html">Geschenke</a></h3>
-<p>
-Falls du uns hallo sagen willst, schreib uns gerne einfach eine <a href="mailto:rattan-gestromt0g@icloud.com">Email</a>.
-<p>
+
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M4.5 19.5C3 12 8 4.5 19.5 4.5 21 12 16 19.5 4.5 19.5Z"/><path d="M5 19C8.5 15.5 12 12 16.5 8.5"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6"/></symbol>
+      <symbol id="i-paw" viewBox="0 0 24 24"><ellipse cx="12" cy="15.5" rx="4.2" ry="3.4"/><circle cx="6.4" cy="10.6" r="1.7"/><circle cx="17.6" cy="10.6" r="1.7"/><circle cx="9.4" cy="6.6" r="1.6"/><circle cx="14.6" cy="6.6" r="1.6"/></symbol>
+      <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="7" r="2.3"/><circle cx="6" cy="17" r="2.3"/><path d="M8 8.4 20 16.8M8 15.6 20 7.2"/></symbol>
+      <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.4" cy="18" r="2.4"/><circle cx="16.4" cy="16" r="2.4"/></symbol>
+      <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 3 6 11.5h3.4L5 18h14l-4.4-6.5H18L12 3Z"/><path d="M12 18v3"/></symbol>
+      <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1 0 4H6a2 2 0 0 1-2-2 2 2 0 0 0 0-4 2 2 0 0 1 0-4Z"/><path d="M14 6.5v11" stroke-dasharray="1.4 2.2"/></symbol>
+      <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 9c2 0 2.2 1.8 4.3 1.8S8.4 9 10.6 9s2.2 1.8 4.3 1.8S17 9 19.1 9 21.3 10.8 22 10.8"/><path d="M2 15c2 0 2.2 1.8 4.3 1.8S8.4 15 10.6 15s2.2 1.8 4.3 1.8S17 15 19.1 15s2.2 1.8 2.9 1.8"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v14.5H6.5A1.5 1.5 0 0 0 5 19V4.5Z"/><path d="M5 19a1.5 1.5 0 0 1 1.5-1.5H19V21H6.5A1.5 1.5 0 0 1 5 19.5Z"/></symbol>
+      <symbol id="i-blocks" viewBox="0 0 24 24"><rect x="3" y="12.5" width="7.5" height="7.5" rx="1.4"/><rect x="13.5" y="12.5" width="7.5" height="7.5" rx="1.4"/><rect x="8.2" y="3.6" width="7.5" height="7.5" rx="1.4"/></symbol>
+      <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.6 6a3.9 3.9 0 0 0-5.1 4.9L4 16.4a1.9 1.9 0 0 0 0 2.7l.9.9a1.9 1.9 0 0 0 2.7 0l5.5-5.5A3.9 3.9 0 0 0 18 9.4l-2.4 2.4-2-.4-.4-2L15.6 7Z"/></symbol>
+      <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 1 0 0 17.6c1.4 0 2-.9 2-1.9 0-1.1 1-1.9 2-1.9h1.1a3 3 0 0 0 3-3A7.9 7.9 0 0 0 12 3.2Z"/><circle cx="7.6" cy="11" r="1"/><circle cx="11" cy="7.8" r="1"/><circle cx="15.4" cy="9.4" r="1"/></symbol>
+      <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 14c0-3.3-2.2-5.4-5.5-5.4C6.5 12 8.7 14 12 14Z"/><path d="M12 12.4c0-3.3 2.2-5.4 5.5-5.4C17.5 10.3 15.3 12.4 12 12.4Z"/></symbol>
+      <symbol id="i-car" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="6.2" rx="2"/><path d="M6 11l1.6-4.2h8.8L18 11"/><circle cx="7.6" cy="18.4" r="1.5"/><circle cx="16.4" cy="18.4" r="1.5"/></symbol>
+      <symbol id="i-cards" viewBox="0 0 24 24"><rect x="9" y="4" width="10" height="14" rx="2" transform="rotate(9 14 11)"/><rect x="4.5" y="6" width="10" height="14" rx="2" transform="rotate(-7 9.5 13)"/></symbol>
+      <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M7 3v7M5 3v3.5a2 2 0 0 0 4 0V3M7 10v11"/><path d="M17.5 3c-1.6 0-2.3 2.1-2.3 5.2s.7 3.8 2.3 3.8v9"/></symbol>
+      <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 8.5h13v4.5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8.5Z"/><path d="M17 9.5h2.2a2.2 2.2 0 0 1 0 4.4H17"/><path d="M8 3.2c-.4.7-.4 1.4 0 2.1M12 3.2c-.4.7-.4 1.4 0 2.1"/></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.6 8.4 13.2 13l-4.8 2.6L10.8 11l4.8-2.6Z"/></symbol>
+      <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M10 4.2a2 2 0 0 1 4 0c0 .8.6 1.1 1.3 1.1H17a1 1 0 0 1 1 1v1.9c0 .7.4 1.1 1.1 1.1a2 2 0 0 1 0 4c-.7 0-1.1.4-1.1 1.1V17a1 1 0 0 1-1 1h-1.9c-.7 0-1.1.4-1.1 1.1a2 2 0 0 1-4 0c0-.7-.4-1.1-1.1-1.1H7a1 1 0 0 1-1-1v-1.9c0-.7-.4-1.1-1.1-1.1a2 2 0 0 1 0-4c.7 0 1.1-.4 1.1-1.1V6.3a1 1 0 0 1 1-1h1.9C9.6 5.3 10 4.9 10 4.2Z"/></symbol>
+      <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/></symbol>
+      <symbol id="i-flower" viewBox="0 0 24 24"><circle cx="12" cy="6.6" r="2.4"/><circle cx="17.2" cy="10.2" r="2.4"/><circle cx="15.2" cy="16.2" r="2.4"/><circle cx="8.8" cy="16.2" r="2.4"/><circle cx="6.8" cy="10.2" r="2.4"/><circle cx="12" cy="12" r="2.1"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.2s-6.9-4.2-9.2-8.6C1.2 8.1 2.9 4.8 6.2 4.8c2 0 3.2 1.2 5.8 3.7 2.6-2.5 3.8-3.7 5.8-3.7 3.3 0 5 3.3 3.4 6.8-2.3 4.4-9.2 8.6-9.2 8.6Z"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.4"/><path d="M3.5 7.2 12 13l8.5-5.8"/></symbol>
+      <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3.5" y="9" width="17" height="4" rx="1"/><path d="M5 13v7.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V13M12 9v12.5"/><path d="M12 9S10.5 4.5 8 4.5a2.2 2.2 0 0 0 0 4.5M12 9s1.5-4.5 4-4.5a2.2 2.2 0 0 1 0 4.5"/></symbol>
+    </g>
+  </defs>
+</svg>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top"><span class="dot"></span>Jonua</a>
+    <nav class="nav__links" aria-label="Seiten-Navigation">
+      <a class="hideSm" href="#jonua">Für Jonua</a>
+      <a class="hideSm" href="#uns">Für uns</a>
+      <a class="btn-mini" href="#hallo">Hallo</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <span class="eyebrow"><svg><use href="#i-sprout"/></svg>Schön, dass du da bist</span>
+        <h1>Hallo — das ist Jonuas <em>kleine Ecke</em> im Netz.</h1>
+        <p class="hero__lead">Hier sammeln wir ein paar Gedanken und Ideen für alle, die Jonua oder uns eine Freude machen möchten. Unser Motto: lieber gemeinsame Zeit und Erlebnisse als noch mehr Dinge.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#jonua"><svg><use href="#i-gift"/></svg>Geschenke für Jonua</a>
+          <a class="btn btn--ghost" href="#hallo">Hallo sagen</a>
+        </div>
+        <div class="values">
+          <span class="value"><svg style="color:var(--sage)"><use href="#i-heart"/></svg>Erlebnisse&nbsp;&gt;&nbsp;Dinge</span>
+          <span class="value"><svg style="color:var(--coral)"><use href="#i-leaf"/></svg>Weniger, aber bewusster</span>
+          <span class="value"><svg style="color:var(--blue)"><use href="#i-clock"/></svg>Zeit schenken</span>
+        </div>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <svg viewBox="0 0 460 420" xmlns="http://www.w3.org/2000/svg">
+          <!-- organic sky blob -->
+          <path d="M232 14c88-8 176 34 200 118 22 78-8 156-70 200-70 50-176 60-252 22C34 338-2 258 6 178 16 78 118 24 232 14Z" fill="#E6EEF6"/>
+          <!-- sun -->
+          <circle cx="132" cy="120" r="42" fill="#F6D2A6"/>
+          <circle cx="132" cy="120" r="27" fill="#E1834F"/>
+          <!-- back hill -->
+          <path d="M18 300c70-58 130-60 210-24s150 34 216-4v130H18V300Z" fill="#9FB79A"/>
+          <!-- front hill -->
+          <path d="M6 340c86-40 132-16 214 6s142 8 232-30v96H6V340Z" fill="#79997A"/>
+          <!-- little sprout on hill -->
+          <g stroke="#37503A" stroke-width="4.5" stroke-linecap="round" fill="none">
+            <path d="M300 348v-40"/>
+          </g>
+          <path d="M300 322c0-16-11-26-27-26 0 14 11 26 27 26Z" fill="#5D7F5F"/>
+          <path d="M300 314c0-16 11-26 27-26 0 14-11 26-27 26Z" fill="#8FAE8B"/>
+          <!-- kite (blue anchor) with tail -->
+          <g transform="rotate(-12 176 176)">
+            <path d="M176 130 210 176 176 222 142 176Z" fill="#3E72A8"/>
+            <path d="M176 130v92M142 176h68" stroke="#2F5C8C" stroke-width="3"/>
+            <path d="M176 222c-2 14-14 18-10 30s16 8 12 22" fill="none" stroke="#2F5C8C" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="167" cy="256" r="5" fill="#E1834F"/>
+            <circle cx="178" cy="278" r="5" fill="#F6D2A6"/>
+          </g>
+          <!-- floating dots -->
+          <circle cx="360" cy="120" r="7" fill="#E1834F" opacity=".8"/>
+          <circle cx="392" cy="170" r="4.5" fill="#79997A"/>
+          <circle cx="66" cy="210" r="5.5" fill="#3E72A8" opacity=".7"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- FÜR JONUA -->
+  <section class="section section--tint" id="jonua">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow sage"><svg><use href="#i-sprout"/></svg>Für den kleinen Entdecker</span>
+        <h2>Geschenke für Jonua</h2>
+        <svg class="squiggle" viewBox="0 0 118 11"><path d="M2 7c9-7 18-7 27 0s18 7 27 0 18-7 27 0 18 7 33 0" stroke="var(--sage)"/></svg>
+        <p class="lead">Jonua steckt voller Neugier, Freude und Entdeckerlust. Damit die Freude an jedem Geschenk erhalten bleibt, ist uns ein bewusster Umgang wichtiger als die Menge.</p>
+      </div>
+
+      <div class="callout">
+        <span class="callout__ic"><svg><use href="#i-gift"/></svg></span>
+        <div>
+          <h4>Eine Bitte: pro Partei ein Geschenk</h4>
+          <p>Ob Oma &amp; Opa oder Tante &amp; Onkel — wenn jede Partei höchstens ein Geschenk auswählt, bleibt der Blick auf dem Wert statt auf der Menge. Danke euch!</p>
+        </div>
+      </div>
+
+      <div class="subhead">
+        <h3>Erlebnisse schenken</h3>
+        <p>Am liebsten sind uns gemeinsame Momente, die nebenbei etwas fürs Lernen und für die Erinnerung mitgeben:</p>
+        <ul class="chips">
+          <li class="chip"><span class="chip__ic" style="--tint:var(--sage-100);--c:var(--sage)"><svg><use href="#i-leaf"/></svg></span><span class="chip__t">Ein Spaziergang im Park — Blätter, Käfer und Vögel entdecken.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--sage-100);--c:var(--sage)"><svg><use href="#i-sun"/></svg></span><span class="chip__t">Ein Nachmittag auf dem Spielplatz mit viel gemeinsamer Zeit.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--sage-100);--c:var(--sage)"><svg><use href="#i-paw"/></svg></span><span class="chip__t">Ein Besuch im Zoo, Wildpark oder Streichelzoo.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--sage-100);--c:var(--sage)"><svg><use href="#i-scissors"/></svg></span><span class="chip__t">Ein Bastelnachmittag, an dem gemeinsam etwas Schönes entsteht.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--sage-100);--c:var(--sage)"><svg><use href="#i-music"/></svg></span><span class="chip__t">Ein Musiknachmittag zum Singen und Musizieren.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--sage-100);--c:var(--sage)"><svg><use href="#i-tree"/></svg></span><span class="chip__t">Ein Ausflug in die Natur — an einen See, in den Wald oder auf die Wiese.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--sage-100);--c:var(--sage)"><svg><use href="#i-ticket"/></svg></span><span class="chip__t">Ein Kinderkonzert oder Theaterstück, passend für sein Alter.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--sage-100);--c:var(--sage)"><svg><use href="#i-wave"/></svg></span><span class="chip__t">Ein Besuch im Schwimmbad oder am Planschbecken, wenn's warm ist.</span></li>
+        </ul>
+      </div>
+
+      <div class="subhead">
+        <h3>Wenn's doch etwas zum Anfassen sein darf</h3>
+        <p>Dann freuen wir uns über Dinge, die nachhaltig sind, aus natürlichen oder langlebigen Materialien bestehen und Jonuas Entwicklung fördern:</p>
+        <ul class="gifts">
+          <li class="gift"><span class="gift__ic"><svg><use href="#i-scissors"/></svg></span><div><b>Bastelsets</b> <span>— Anleitungen und Sets, die kreatives Denken und Feinmotorik fördern.</span></div></li>
+          <li class="gift"><span class="gift__ic"><svg><use href="#i-blocks"/></svg></span><div><b>Holzspielzeug</b> <span>— Bauklötze, Puzzles oder Steckspiele.</span></div></li>
+          <li class="gift"><span class="gift__ic"><svg><use href="#i-music"/></svg></span><div><b>Instrumente</b> <span>— Trommel, Xylophon oder Rasseln für kleine Hände.</span></div></li>
+          <li class="gift"><span class="gift__ic"><svg><use href="#i-palette"/></svg></span><div><b>Knete &amp; Malutensilien</b> <span>— umweltfreundlich und ungiftig.</span></div></li>
+          <li class="gift"><span class="gift__ic"><svg><use href="#i-sprout"/></svg></span><div><b>Samen &amp; Pflanzkasten</b> <span>— gemeinsam anbauen und die Natur erleben.</span></div></li>
+          <li class="gift"><span class="gift__ic"><svg><use href="#i-blocks"/></svg></span><div><b>Baukästen</b> <span>— z.&nbsp;B. Magnetbaukästen, die Motorik und Kreativität fördern.</span></div></li>
+          <li class="gift"><span class="gift__ic"><svg><use href="#i-cards"/></svg></span><div><b>Gesellschaftsspiele</b> <span>— altersgerecht, gut für Konzentration und das Miteinander.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FÜR CARO & FABI -->
+  <section class="section" id="uns">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow coralc"><svg><use href="#i-heart"/></svg>Für uns zwei</span>
+        <h2>Geschenke für Caro &amp; Fabi</h2>
+        <svg class="squiggle" viewBox="0 0 118 11"><path d="M2 7c9-7 18-7 27 0s18 7 27 0 18-7 27 0 18 7 33 0" stroke="var(--coral)"/></svg>
+        <p class="lead">Wir haben alles, was wir brauchen — und sind glücklich damit. Uns liegt daran, Konsum insgesamt zu verringern, denn jedes Ding verbraucht Ressourcen. Wenn ihr uns trotzdem etwas schenken möchtet, dann am liebsten ein gemeinsames Erlebnis — am schönsten zusammen mit euch. Denn das eigentliche Geschenk ist die gemeinsame Zeit.</p>
+      </div>
+
+      <ul class="reasons">
+        <li class="reason">
+          <span class="reason__ic"><svg><use href="#i-clock"/></svg></span>
+          <h4>Zeit miteinander</h4>
+          <p>Ein Essen, ein Ausflug, ein Konzert — gemeinsame Momente schaffen Erinnerungen, die bleiben.</p>
+        </li>
+        <li class="reason">
+          <span class="reason__ic"><svg><use href="#i-heart"/></svg></span>
+          <h4>Emotionaler Wert</h4>
+          <p>Ein schönes Erlebnis bleibt im Herzen — auf eine Weise, die kein Gegenstand erreicht.</p>
+        </li>
+        <li class="reason">
+          <span class="reason__ic"><svg><use href="#i-leaf"/></svg></span>
+          <h4>Nachhaltigkeit</h4>
+          <p>Ein Erlebnis hinterlässt meist einen kleineren Fußabdruck als Herstellung und Transport von Dingen.</p>
+        </li>
+      </ul>
+
+      <div class="subhead">
+        <h3>Erlebnisse, über die wir uns freuen</h3>
+        <p>Ein paar Ideen — von gemütlich bis abenteuerlich. Das Schönste daran: Wir würden sie am liebsten gemeinsam mit euch erleben.</p>
+        <ul class="chips">
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-utensils"/></svg></span><span class="chip__t">Gemeinsam essen gehen in einem gemütlichen Restaurant.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-coffee"/></svg></span><span class="chip__t">Frühstück oder Brunch in einem schönen Café.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-compass"/></svg></span><span class="chip__t">Ein gemeinsamer Ausflug oder eine Aktivität, die wir alle genießen.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-ticket"/></svg></span><span class="chip__t">Eintrittskarten für ein Event, das wir zusammen besuchen.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-utensils"/></svg></span><span class="chip__t">Ein Kochkurs — für ein bestimmtes Gericht oder eine besondere Küche.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-tree"/></svg></span><span class="chip__t">Ein Wanderausflug mit Picknick in der Natur.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-wave"/></svg></span><span class="chip__t">Eine Boots- oder Kanufahrt.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-leaf"/></svg></span><span class="chip__t">Ein Besuch im Tierpark oder botanischen Garten.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-puzzle"/></svg></span><span class="chip__t">Ein Escape Room — ein Abenteuer zusammen lösen.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-palette"/></svg></span><span class="chip__t">Ein Kreativ-Workshop — Malen, Töpfern, Nähen oder Stricken.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-target"/></svg></span><span class="chip__t">Etwas Sportliches wie Minigolf, Bowling oder Trampolinspringen.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-flower"/></svg></span><span class="chip__t">Ein Tag in der Therme oder Sauna.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-flower"/></svg></span><span class="chip__t">Eine Massage oder Spa-Anwendung.</span></li>
+          <li class="chip"><span class="chip__ic" style="--tint:var(--coral-100);--c:var(--coral)"><svg><use href="#i-music"/></svg></span><span class="chip__t">Ein musikalisches Ständchen oder ein kleines Konzert.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- GEDANKEN ZUM SCHENKEN -->
+  <section class="section section--tint-blue" id="schenken">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow" style="color:var(--blue)"><svg><use href="#i-heart"/></svg>Gut zu wissen</span>
+        <h2>Ein paar Gedanken zum Schenken</h2>
+        <svg class="squiggle" viewBox="0 0 118 11"><path d="M2 7c9-7 18-7 27 0s18 7 27 0 18-7 27 0 18 7 33 0" stroke="var(--blue)"/></svg>
+        <p class="lead">Ganz gleich, ob für Jonua oder für uns — diese drei Dinge liegen uns bei jedem Geschenk am Herzen.</p>
+      </div>
+
+      <ul class="reasons">
+        <li class="reason">
+          <span class="reason__ic" style="background:var(--blue-100);color:var(--blue)"><svg><use href="#i-ticket"/></svg></span>
+          <h4>Erlebnisse verschenken</h4>
+          <p>Ein Erlebnis lässt sich genauso schön verpacken wie ein Päckchen: eine selbstgemachte Gutschein-Karte, ein gemaltes Bild — oder einfach die Zusage, gemeinsam etwas zu unternehmen. Den Termin finden wir dann zusammen.</p>
+        </li>
+        <li class="reason">
+          <span class="reason__ic" style="background:var(--blue-100);color:var(--blue)"><svg><use href="#i-leaf"/></svg></span>
+          <h4>Gebraucht, geliehen, gemeinsam</h4>
+          <p>Second-Hand ist ausdrücklich willkommen — das schont Ressourcen und ist oft genauso schön. Manches leihen wir uns lieber aus, etwa Bücher und Hörfiguren, statt es neu zu kaufen. Und wer mag, tut sich mit anderen zusammen und schenkt gemeinsam ein größeres Erlebnis statt vieler kleiner Dinge.</p>
+        </li>
+        <li class="reason">
+          <span class="reason__ic" style="background:var(--blue-100);color:var(--blue)"><svg><use href="#i-tree"/></svg></span>
+          <h4>Spenden statt Geschenke</h4>
+          <p>Wenn ihr lieber etwas Gutes tun möchtet, freuen wir uns über eine Spende an eine Herzenssache — zum Beispiel den <a href="https://www.nabu-hagen.de/" target="_blank" rel="noopener">NABU Hagen</a>, der sich direkt vor unserer Haustür für Natur- und Artenschutz einsetzt.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- HALLO -->
+  <section class="section hallo" id="hallo">
+    <div class="wrap">
+      <div class="hallo__card">
+        <span class="eyebrow"><svg><use href="#i-mail"/></svg>Kontakt</span>
+        <h2>Sag uns Hallo</h2>
+        <p>Du möchtest etwas abstimmen, eine Idee teilen oder einfach Hallo sagen? Schreib uns — wir freuen uns.</p>
+        <a class="btn" href="mailto:rattan-gestromt0g@icloud.com"><svg><use href="#i-mail"/></svg>Schreib uns eine E-Mail</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__in">
+    <a class="brand" href="#top"><span class="dot"></span>Jonua</a>
+    <div class="footer__meta">
+      <span>Erlebnisse&nbsp;&gt;&nbsp;Dinge</span>
+      <a href="#jonua">Für Jonua</a>
+      <a href="#uns">Für uns</a>
+      <a href="mailto:rattan-gestromt0g@icloud.com">E-Mail</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // subtle nav border once scrolled
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+</script>
 </body>
 </html>
